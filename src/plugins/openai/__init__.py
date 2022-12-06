@@ -57,7 +57,7 @@ def get_chat_response(session_id, prompt):
 async def _(event: MessageEvent, arg: Message = CommandArg()):
     session_id = event.get_session_id()
     msg = arg.extract_plain_text().strip()
-    logger.error(f"{session_id} {msg}")
+    logger.debug(f"{session_id} {msg}")
 
     resp = await asyncio.get_event_loop().run_in_executor(None, get_chat_response, session_id, msg)
     await chatGPT.send(resp, at_sender = True)
