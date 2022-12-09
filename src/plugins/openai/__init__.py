@@ -1,10 +1,9 @@
 from nonebot import get_driver
 from .config import Config
 from nonebot import on_command
-from nonebot.adapters.onebot.v11 import Message, MessageEvent
+from nonebot.adapters.onebot.v11 import Message, GroupMessageEvent
 from nonebot.params import CommandArg
 from nonebot.log import logger
-from nonebot.rule import to_me
 from revChatGPT.revChatGPT import Chatbot
 from nonebot import require
 import time
@@ -12,17 +11,18 @@ import asyncio
 
 scheduler = require("nonebot_plugin_apscheduler").scheduler
 global_config = get_driver().config
-
-
 # 配置token
 config = Config.parse_obj(global_config)
 
+
 chatGPT = on_command("。", aliases={"."}, priority=10, block=True)
+
 
 config = {
         "Authorization": "<Your Bearer Token Here>", # This is optional
         "session_token": config.session_token
 }
+
 
 user_session = dict()
 # 初始化bot
@@ -31,7 +31,7 @@ chatbot = Chatbot(config)
 def get_chat_response(session_id, prompt):
     if session_id in user_session:
         # 如果在三分钟内再次发起对话则使用相同的会话ID
-        if time.time() < user_session[session_id]['timestamp'] + 60 * 3:
+        if time.time() < user_session[session_id]['timestamp'] + 60 * 10:
             chatbot.conversation_id = user_session[session_id]['conversation_id']
             chatbot.parent_id = user_session[session_id]['parent_id']
         else:
@@ -42,20 +42,30 @@ def get_chat_response(session_id, prompt):
 
     try:
         resp = chatbot.get_chat_response(prompt, output="text")
-
-        user_cache = dict()
-        user_cache['timestamp'] = time.time()
-        user_cache['conversation_id'] = resp['conversation_id']
-        user_cache['parent_id'] = resp['parent_id']
-        user_session[session_id] = user_cache
-
+        handle_cache(resp, session_id)
         return resp['message']
+
     except Exception as e:
-        print(e)
-        return f"发生错误: {str(e)}"
+        # 通常请求第二次会成功
+        logger.error(f"第一次 {e}")
+        try:
+            resp = chatbot.get_chat_response(prompt, output="text")
+            handle_cache(resp, session_id)
+            return resp['message']
+        except Exception as e:
+            # 第二次失败
+            logger.error(f"第二次 {e}")
+            return f"发生错误: {str(e)}"
+
+def handle_cache(resp, session_id) :
+    user_cache = dict()
+    user_cache['timestamp'] = time.time()
+    user_cache['conversation_id'] = resp['conversation_id']
+    user_cache['parent_id'] = resp['parent_id']
+    user_session[session_id] = user_cache
 
 @chatGPT.handle()
-async def _(event: MessageEvent, arg: Message = CommandArg()):
+async def _(event: GroupMessageEvent, arg: Message = CommandArg()):
     session_id = event.get_session_id()
     msg = arg.extract_plain_text().strip()
     logger.debug(f"{session_id} {msg}")
