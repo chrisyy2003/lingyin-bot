@@ -116,7 +116,7 @@ async def get_chat_response(session_id, prompt):
 
 
 @chatGPT.handle()
-async def _(event: GroupMessageEvent, arg: Message = CommandArg()):
+async def _(event: MessageEvent, arg: Message = CommandArg()):
     session_id = event.get_session_id()
     msg = arg.extract_plain_text().strip()
     logger.debug(f"{session_id} {msg}")
