@@ -6,7 +6,7 @@
 2.  `peotry install ` 安装依赖
 3.  `peotry run nb run` 启动bot
 
-## ChatGPT插件
+<!-- ## ChatGPT插件
 
 ### 安装
 
@@ -41,7 +41,7 @@ nonebot.load_plugin('nonebot_plugin_multi_chatgpt')
    ![image-20221206173841156](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221206173841156.png)
 3. 打开Application选项卡 > Cookie
    ![](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221205094326498.png)
-4. 复制值`__Secure-next-auth.session-token`并将其粘贴到在`.env.dev`中`session_token`即可。不需要管Authorization的值。
+4. 复制值`__Secure-next-auth.session-token`并将其粘贴到在`.env.dev`中`session_token`即可。不需要管Authorization的值。 -->
 
 ## Todo
 
