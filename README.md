@@ -2,9 +2,9 @@
 
 ## 启动机器人
 
-1.  `pipi3 install peotry nonebot-adapter-onebot ` 安装peorty包管理器和onebot适配器
-2.  `peotry install ` 安装依赖
-3.  `peotry run nb run` 启动bot
+1.  `pipi3 install poetry nonebot-adapter-onebot ` 安装peorty包管理器和onebot适配器
+2.  `poetry install ` 安装依赖
+3.  `poetry run nb run` 启动bot
 
 <!-- ## ChatGPT插件
 
