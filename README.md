@@ -1,13 +1,38 @@
 # Lingyin Bot
 
-## How to start
+## 启动机器人
 
-1. `pip3 install -r requirements.txt`安装requirements.txt中的依赖
-2. `python3 bot.py`启动Bot
+1.  `pipi3 install peotry nonebot-adapter-onebot ` 安装peorty包管理器和onebot适配器
+2.  `peotry install ` 安装依赖
+3.  `peotry run nb run` 启动bot
 
-## ChatGPT
+## ChatGPT插件
 
-在`.env.dev`中配置自己的`session_token`即可
+### 安装
+
+~~第一种方式~~（暂时不行，等待pr通过）
+
+```
+nb plugin install nonebot_plugin_multi_chatgpt
+```
+
+------
+
+第二种方式，使用一下命令安装
+
+```
+pip3 install nonebot-plugin-multi-chatgpt==1.0.0
+```
+
+随后在`bot.py`中加上如下代码，加载插件
+
+```
+nonebot.load_plugin('nonebot_plugin_multi_chatgpt')
+```
+
+### 配置
+
+在`.env.dev`中配置自己的`chatgpt_session_token_list`即可
 
 具体方法如下：
 
