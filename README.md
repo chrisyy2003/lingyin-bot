@@ -6,7 +6,16 @@
 2.  `poetry install && pip3 install nonebot_plugin_apscheduler nonebot-adapter-onebo` 安装依赖
 3.  `poetry run nb run` 启动bot
 
-<!-- ## ChatGPT插件
+# 作为插件安装
+
+Lingyin Bot中的源码已作为插件发布，如果觉得有帮助需要继承到自己的Bot中可以使用两种方法：
+
+1.  直接复制源码中的插件到自己的bot的plugin目录下，然后加上相应的配置即可
+2.  通过包管理器安装，可以通过nb，pip3，或者poetry等方式安装
+
+第一种可能需要一定的基础，第二种几行命令就可以搞定，但是方便自定义功能。
+
+## ChatGPT
 
 ### 安装
 
@@ -41,8 +50,9 @@ nonebot.load_plugin('nonebot_plugin_multi_chatgpt')
    ![image-20221206173841156](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221206173841156.png)
 3. 打开Application选项卡 > Cookie
    ![](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221205094326498.png)
-4. 复制值`__Secure-next-auth.session-token`并将其粘贴到在`.env.dev`中`session_token`即可。不需要管Authorization的值。 -->
+4. 复制值`__Secure-next-auth.session-token`并将其粘贴到在`.env.dev`中`session_token`即可。不需要管Authorization的值。
 
-## Todo
+### Todo
 
 - [ ] 返回值渲染为图片
+- [ ] 完善密码登陆
