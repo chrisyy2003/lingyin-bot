@@ -4,38 +4,59 @@ from nonebot import on_command
 from nonebot.adapters.onebot.v11 import Message, MessageEvent, GroupMessageEvent
 from nonebot.params import CommandArg
 from nonebot.log import logger
+# bug for 0.0.37 waiting fix
+# from revChatGPT.revChatGPT import asyncChatBot as Chatbot
+# use 0.0.34
 from asyncChatGPT.asyncChatGPT import Chatbot
 from nonebot import require
 import time
 import asyncio
 
-
+driver = get_driver()
 scheduler = require("nonebot_plugin_apscheduler").scheduler
-global_config = get_driver().config
+global_config = driver.config
 config = Config.parse_obj(global_config)
 
 # 获取token列表
 chatgpt_session_tokens = config.chatgpt_session_token_list
 chatgpt_email_list = config.chatgpt_email_list
 chatgpt_passwd_list = config.chatgpt_passwd_list
+chatgpt_proxy = config.chatgpt_proxy
+chatgpt_command_prefix = config.chatgpt_command_prefix
 
-# 如果只有session_token
-if len(chatgpt_email_list) == len(chatgpt_passwd_list) and len(chatgpt_session_tokens) != 0:
+assert (len(chatgpt_email_list) == len(chatgpt_passwd_list))
+# 如果session_token登陆
+if len(chatgpt_session_tokens) != 0 and len(chatgpt_email_list) == 0:
     chatgpt_email_list = len(chatgpt_session_tokens) * ['']
     chatgpt_passwd_list = len(chatgpt_session_tokens) * ['']
-assert (len(chatgpt_email_list) == len(chatgpt_passwd_list))
+else:
+    # 如果密码登陆
+    assert (len(chatgpt_session_tokens) == 0)
+    chatgpt_session_tokens = len(chatgpt_email_list) * ['']
 
 config_list = [{
     "session_token": token,
     "email": email,
     "password": passwd,
+    "proxy": chatgpt_proxy if chatgpt_proxy else ''
 } for token, email, passwd in zip(chatgpt_session_tokens, chatgpt_email_list, chatgpt_passwd_list)]
 
 # 初始化chatbot
-chat_bot_list = [Chatbot(i) for i in config_list]
+chat_bot_list = []
+@driver.on_startup
+async def _():
+    logger.debug(f"初始化: {len(config_list)}个 Bot")
+    async def init_bot():
+        res = []
+        for i in config_list:
+            res.append(await asyncio.get_event_loop().run_in_executor(None, Chatbot, i))
+        return res
+
+    global chat_bot_list
+    chat_bot_list = await init_bot()
 
 # 触发器
-chatGPT = on_command("。", aliases={"."}, priority=10, block=True)
+chatGPT = on_command(chatgpt_command_prefix, priority=10, block=True)
 
 # 用户会话ID map
 user_session = dict()
@@ -73,18 +94,12 @@ async def get_chat_response(session_id, prompt):
 
     msg = ''
     try:
-        # handle_cache(resp, session_id)
-
         user_cache = dict()
-        # 记录用户的bot index
-
-        # logger.error(f"{not use_old_chatbot()}")
         if not use_old_chatbot(session_id):
             logger.info("新用户")
             user_cache['bot_index'] = index
         else:
             user_cache['bot_index'] = user_session[session_id]['bot_index']
-
             logger.info("老用户")
 
         index = (index + 1) % max(len(chatgpt_session_tokens), len(chatgpt_email_list))
@@ -130,7 +145,6 @@ async def _(event: MessageEvent, arg: Message = CommandArg()):
         await chatGPT.send(resp, at_sender=True)
         user_lock[session_id] = False
 
-
 # 定时刷新seesion_token
 @scheduler.scheduled_job("interval", minutes=10)
 async def refresh_session():
@@ -138,7 +152,5 @@ async def refresh_session():
     for chatbot in chat_bot_list:
         # await chatbot.refresh_session()
         logger.debug(f"refresh chatGPT {chat_bot_list.index(chatbot)}")
-        await asyncio.get_event_loop().run_in_executor(None, chatbot.refresh_session);
-
-
+        await asyncio.get_event_loop().run_in_executor(None, chatbot.refresh_session)
 scheduler.add_job(refresh_session)

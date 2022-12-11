@@ -1,23 +1,24 @@
 [tool.poetry]
-name = "lingyin"
+name = "lingyin-bot"
 version = "0.1.0"
-description = "lingyin"
-authors = []
+description = ""
+authors = ["chrisyy <1017975501@qq.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.7.3"
-nonebot2 = "^2.0.0-beta.1"
-revchatgpt = "^0.0.34"
-# nonebot-adapter-onebot = "^2.1.5"
+python = "^3.10"
+nonebot2 = "^2.0.0rc2"
+nonebot-adapter-onebot = "^2.1.5"
+nonebot-plugin-apscheduler = "^0.2.0"
+revchatgpt = "0.0.34"
+poetry = "^1.3.0"
 
-[tool.poetry.dev-dependencies]
-nb-cli = "^0.6.0"
-
-[tool.nonebot]
-plugins = ["nonebot_plugin_apscheduler"]
-plugin_dirs = ["src/plugins"]
 
 [build-system]
-requires = ["poetry_core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+# nonebot配置
+[tool.nonebot]
+plugins = ["nonebot_plugin_apscheduler"]
+plugin_dirs = ["plugins/"]

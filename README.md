@@ -3,8 +3,8 @@
 ## 启动机器人
 
 1.  `pip3 install poetry` 安装peorty包管理器和onebot适配器
-2.  `poetry install && pip3 install nonebot_plugin_apscheduler nonebot-adapter-onebo` 安装依赖
-3.  `poetry run nb run` 启动bot
+2.  `poetry install` 安装依赖
+3.  `poetry run ` 启动bot
 
 # 作为插件安装
 
