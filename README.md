@@ -4,7 +4,7 @@
 
 1.  `pip3 install poetry` 安装peorty包管理器和onebot适配器
 2.  `poetry install` 安装依赖
-3.  `poetry run ` 启动bot
+3.  `source .venv/bin/activate && python3 bot.py` 启动bot
 
 # 作为插件安装
 
@@ -15,7 +15,7 @@ Lingyin Bot中的源码已作为插件发布，如果觉得有帮助需要继承
 
 第一种可能需要一定的基础，第二种几行命令就可以搞定，但是方便自定义功能。
 
-## ChatGPT
+## 多账户ChatGPT
 
 ### 安装
 
