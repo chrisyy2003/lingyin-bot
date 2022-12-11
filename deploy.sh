@@ -1,0 +1,1 @@
+nohup poetry run python3 bot.py >> /dev/null 2>&1 &

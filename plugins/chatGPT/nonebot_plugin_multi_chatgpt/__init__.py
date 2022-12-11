@@ -133,6 +133,10 @@ async def get_chat_response(session_id, prompt):
 async def _(event: MessageEvent, arg: Message = CommandArg()):
     session_id = event.get_session_id()
     msg = arg.extract_plain_text().strip()
+
+    if not msg:
+        return
+        
     logger.debug(f"{session_id} {msg}")
     # logger.info(user_session)
 
