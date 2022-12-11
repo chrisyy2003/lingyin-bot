@@ -4,7 +4,8 @@
 
 1.  `pip3 install poetry` 安装peorty包管理器和onebot适配器
 2.  `poetry install` 安装依赖
-3.  `source .venv/bin/activate && python3 bot.py` 启动bot
+3.  进入到虚拟环境后`python3 bot.py` 启动bot
+<!-- 3.  `source venv/bin/activate && python3 bot.py` 启动bot -->
 
 # 作为插件安装
 
@@ -43,14 +44,20 @@ nonebot.load_plugin('nonebot_plugin_multi_chatgpt')
 
 在`.env.dev`中配置自己的`chatgpt_session_token_list`即可
 
-具体方法如下：
+多个token，请注意不能换行只能写成一排 例如 
 
-1. 随后在转到https://chat.openai.com/chat并登录或注册
-2. 按F12打开Chrome控制台
-   ![image-20221206173841156](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221206173841156.png)
-3. 打开Application选项卡 > Cookie
-   ![](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221205094326498.png)
-4. 复制值`__Secure-next-auth.session-token`并将其粘贴到在`.env.dev`中`session_token`即可。不需要管Authorization的值。
+```
+chatgpt_session_token_list = ["xxx", "yyy", "zzz"]
+```
+
+如果只有一个session也需要用数组的形式 
+
+```
+chatgpt_session_token_list = ["xxxx"]
+```
+
+获取token得方法，打开Application选项卡 > Cookie，复制值`__Secure-next-auth.session-token`并将其粘贴到在`.env.dev`中`session_token`即可。不需要管Authorization的值。
+![](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221205094326498.png)
 
 ### Todo
 

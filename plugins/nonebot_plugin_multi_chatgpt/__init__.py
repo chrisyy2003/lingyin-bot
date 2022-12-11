@@ -4,10 +4,7 @@ from nonebot import on_command
 from nonebot.adapters.onebot.v11 import Message, MessageEvent, GroupMessageEvent
 from nonebot.params import CommandArg
 from nonebot.log import logger
-# bug for 0.0.37 waiting fix
-# from revChatGPT.revChatGPT import asyncChatBot as Chatbot
-# use 0.0.34
-from asyncChatGPT.asyncChatGPT import Chatbot
+from revChatGPT.revChatGPT import AsyncChatbot as Chatbot
 from nonebot import require
 import time
 import asyncio
@@ -140,9 +137,11 @@ async def _(event: MessageEvent, arg: Message = CommandArg()):
     if session_id in user_lock and user_lock[session_id]:
         await chatGPT.send("消息太快啦～请稍后", at_sender=True)
     else:
+        # 防止异步导致的会话parentid顺序错误，所以需要上锁
         user_lock[session_id] = True
         resp = await get_chat_response(session_id, msg)
         await chatGPT.send(resp, at_sender=True)
+        # 解锁
         user_lock[session_id] = False
 
 # 定时刷新seesion_token
