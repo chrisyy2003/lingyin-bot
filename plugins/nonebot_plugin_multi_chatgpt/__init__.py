@@ -46,7 +46,9 @@ async def _():
     async def init_bot():
         res = []
         for i in config_list:
-            res.append(await asyncio.get_event_loop().run_in_executor(None, Chatbot, i))
+            bot = await asyncio.get_event_loop().run_in_executor(None, Chatbot, i)
+            logger.debug(f"bot {config_list.index(i)} 初始化成功")
+            res.append(bot)
         return res
 
     global chat_bot_list

@@ -4,7 +4,7 @@
 
 1.  `pip3 install poetry` 安装peorty包管理器和onebot适配器
 2.  `poetry install` 安装依赖
-3.  进入到虚拟环境后`python3 bot.py` 启动bot
+3.  `poetry run python3 bot.py` 启动bot
 <!-- 3.  `source venv/bin/activate && python3 bot.py` 启动bot -->
 
 # 作为插件安装
