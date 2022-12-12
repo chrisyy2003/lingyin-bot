@@ -20,6 +20,9 @@ chatgpt_email_list = config.chatgpt_email_list
 chatgpt_passwd_list = config.chatgpt_passwd_list
 chatgpt_proxy = config.chatgpt_proxy
 chatgpt_command_prefix = config.chatgpt_command_prefix
+chatgpt_cf_clearance = config.chatgpt_cf_clearance
+chatgpt_user_agent = config.chatgpt_user_agent
+
 
 assert (len(chatgpt_email_list) == len(chatgpt_passwd_list))
 # 如果session_token登陆
@@ -34,6 +37,8 @@ else:
 config_list = [{
     "session_token": token,
     "email": email,
+    "cf_clearance": chatgpt_cf_clearance,
+    "user_agent": chatgpt_user_agent,
     "password": passwd,
     "proxy": chatgpt_proxy if chatgpt_proxy else ''
 } for token, email, passwd in zip(chatgpt_session_tokens, chatgpt_email_list, chatgpt_passwd_list)]
