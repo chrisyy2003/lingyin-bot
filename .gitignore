@@ -144,7 +144,6 @@ dmypy.json
 # End of https://www.toptal.com/developers/gitignore/api/python
 .DS_Store
 .idea/
-test*.py
 
 # clash 代理
 clash/
