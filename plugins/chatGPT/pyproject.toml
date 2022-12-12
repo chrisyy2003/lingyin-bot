@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-multi-chatgpt"
-version = "2.0.1"
+version = "2.0.3"
 description = ""
 authors = ["chrisyy <1017975501@qq.com>"]
 readme = "README.md"
@@ -11,8 +11,7 @@ python = "^3.8"
 nonebot2 = "^2.0.0rc2"
 nonebot-adapter-onebot = "^2.1.5"
 nonebot-plugin-apscheduler = "^0.2.0"
-revchatgpt = "^0.0.38.1"
-
+revchatgpt = "^0.0.38.7"
 
 [build-system]
 requires = ["poetry-core"]

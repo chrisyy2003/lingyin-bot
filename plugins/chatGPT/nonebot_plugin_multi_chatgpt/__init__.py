@@ -26,7 +26,7 @@ chatgpt_user_agent = config.chatgpt_user_agent
 
 assert (len(chatgpt_email_list) == len(chatgpt_passwd_list))
 # 如果session_token登陆
-if len(chatgpt_session_tokens) != 0 and len(chatgpt_email_list) == 0:
+if len(chatgpt_session_tokens) != 0 and len(chatgpt_email_list) == 0 and len(chatgpt_cf_clearance) != 0:
     chatgpt_email_list = len(chatgpt_session_tokens) * ['']
     chatgpt_passwd_list = len(chatgpt_session_tokens) * ['']
 else:
@@ -37,12 +37,14 @@ else:
 config_list = [{
     "session_token": token,
     "email": email,
-    "cf_clearance": chatgpt_cf_clearance,
+    "cf_clearance": cf_clearance,
     "user_agent": chatgpt_user_agent,
     "password": passwd,
     "proxy": chatgpt_proxy if chatgpt_proxy else ''
-} for token, email, passwd in zip(chatgpt_session_tokens, chatgpt_email_list, chatgpt_passwd_list)]
+} for token, cf_clearance, email, passwd in zip(chatgpt_session_tokens, chatgpt_cf_clearance, chatgpt_email_list, chatgpt_passwd_list)]
 
+
+print(config_list)
 # 初始化chatbot
 chat_bot_list = []
 @driver.on_startup
