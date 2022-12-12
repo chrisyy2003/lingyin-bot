@@ -27,6 +27,7 @@ chatgpt_user_agent = config.chatgpt_user_agent
 assert (len(chatgpt_email_list) == len(chatgpt_passwd_list))
 # 如果session_token登陆
 if len(chatgpt_session_tokens) != 0 and len(chatgpt_email_list) == 0 and len(chatgpt_cf_clearance) != 0:
+    assert (len(chatgpt_user_agent) == len(chatgpt_session_tokens))
     chatgpt_email_list = len(chatgpt_session_tokens) * ['']
     chatgpt_passwd_list = len(chatgpt_session_tokens) * ['']
 else:
@@ -38,13 +39,11 @@ config_list = [{
     "session_token": token,
     "email": email,
     "cf_clearance": cf_clearance,
-    "user_agent": chatgpt_user_agent,
+    "user_agent": agent,
     "password": passwd,
     "proxy": chatgpt_proxy if chatgpt_proxy else ''
-} for token, cf_clearance, email, passwd in zip(chatgpt_session_tokens, chatgpt_cf_clearance, chatgpt_email_list, chatgpt_passwd_list)]
+} for token, cf_clearance, agent, email, passwd in zip(chatgpt_session_tokens, chatgpt_cf_clearance, chatgpt_user_agent, chatgpt_email_list, chatgpt_passwd_list)]
 
-
-print(config_list)
 # 初始化chatbot
 chat_bot_list = []
 @driver.on_startup
@@ -59,7 +58,11 @@ async def _():
         return res
 
     global chat_bot_list
-    chat_bot_list = await init_bot()
+    try:
+        chat_bot_list = await init_bot()
+    except Exception as e:
+        logger.error("chatGPT 初始化失败")
+        exit(0)
 
 # 触发器
 chatGPT = on_command(chatgpt_command_prefix, priority=10, block=True)
