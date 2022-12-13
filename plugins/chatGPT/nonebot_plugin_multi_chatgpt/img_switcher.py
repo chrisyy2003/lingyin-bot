@@ -100,7 +100,7 @@ check_switch_list = on_command("查看输出", aliases={"查看图片输出", "�
 
 
 @check_switch_list.handle()
-async def _(bot:Bot, event: MessageEvent):
+async def _(bot: Bot, event: MessageEvent):
     config_history = await yaml_load(IMG_OUT_CONFIG)
     msg = ""
     msg += f"全局图片输出：\n - {'开启' if config_history.get('global') else '关闭'}\n"
@@ -114,4 +114,44 @@ async def _(bot:Bot, event: MessageEvent):
         msg += f" - {u_name}:{user}\n"
     img = await text_to_pic(msg)
     await check_switch_list.finish(MessageSegment.image(img))
+
+
+config_handler = on_command("图片输出删除", aliases={"输出删除"}, priority=1, block=True, permission=SUPERUSER)
+
+
+@config_handler.handle()
+async def _(event: MessageEvent, arg: Message = CommandArg()):
+    msg = arg.extract_plain_text().strip()
+    if not msg:
+        return
+    mode = "g"
+    if "u" in msg:
+        mode = "u"
+        msg = msg.replace("u", "")
+    msgs = msg.split()
+    r = ""
+    if msgs:
+        for id_ in msgs:
+            if id_.isdigit():
+                history_config = await yaml_load(IMG_OUT_CONFIG)
+                if mode == "g":
+                    if id_ in history_config.get('groups'):
+                        history_config.get('groups').remove(id_)
+                        await yaml_upload(IMG_OUT_CONFIG, {'groups': history_config.get('groups')})
+                        r += f"已删除群：{id_}\n"
+                    else:
+                        r += f"群：{id_}不存在\n"
+                elif mode == "u":
+                    if id_ in history_config.get('users'):
+                        history_config.get('users').remove(id_)
+                        await yaml_upload(IMG_OUT_CONFIG, {'users': history_config.get('users')})
+                        r += f"已删除用户：{id_}\n"
+                    else:
+                        r += f"用户：{id_}不存在\n"
+            else:
+                r += f"无效的id：{id_}\n"
+        await config_handler.finish(r)
+    else:
+        pass
+
 
