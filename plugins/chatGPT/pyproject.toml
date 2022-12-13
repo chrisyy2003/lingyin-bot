@@ -11,7 +11,8 @@ python = "^3.8"
 nonebot2 = "^2.0.0rc2"
 nonebot-adapter-onebot = "^2.1.5"
 nonebot-plugin-apscheduler = "^0.2.0"
-revchatgpt = "^0.0.38.7"
+revchatgpt = "^0.0.43"
+
 
 [build-system]
 requires = ["poetry-core"]

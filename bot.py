@@ -3,14 +3,22 @@
 
 import nonebot
 from nonebot.adapters.onebot.v11 import Adapter as ONEBOT_V11Adapter
-from nonebot.log import logger, default_format
+from nonebot.log import logger, logger_id, default_filter
+import sys
 
-# 日志
-logger.add("log/bot.log",
-           rotation="00:00",
-           diagnose=False,
-           level="DEBUG",
-           format=default_format)
+# 删除默认日志
+logger.remove(logger_id)
+# 日志格式
+default_format: str = (
+    "<g>{time:MM-DD HH:mm:ss}</g> "
+    "[<lvl>{level:<7}</lvl>] "
+    "<c><u>{name}</u></c> | "
+    "{message}"
+)
+# 控制台
+logger.add(sys.stdout, level=0, diagnose=False, filter=default_filter, format=default_format)
+# 文件日志
+logger.add("log/bot.log", rotation="00:00", diagnose=False, level="DEBUG", format=default_format)
 
 nonebot.init()
 app = nonebot.get_asgi()
