@@ -68,7 +68,7 @@ async def _(event: GroupMessageEvent, arg: Message = CommandArg()):
         pass
 
 
-user_out = on_command("对我输出图片", aliases={"对我输出"}, priority=1, block=True, permission=SUPERUSER)
+user_out = on_command("对我输出图片", aliases={"对我输出"}, priority=1, block=True)
 
 
 @user_out.handle()
