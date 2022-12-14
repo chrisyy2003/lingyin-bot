@@ -10,6 +10,7 @@ import time
 from nonebot.rule import to_me
 import asyncio
 import json
+from .utils import user_input, output_img
 
 driver = get_driver()
 scheduler = require("nonebot_plugin_apscheduler").scheduler
@@ -151,7 +152,10 @@ async def _(event: MessageEvent, arg: Message = CommandArg()):
 
     if not msg:
         return
-
+    img_out_rule = False
+    preprocess = user_input(msg)
+    msg = preprocess[0]
+    img_out_rule = preprocess[1]
     logger.debug(f"{session_id} {msg}")
     # logger.info(user_session)
 
@@ -161,6 +165,7 @@ async def _(event: MessageEvent, arg: Message = CommandArg()):
         # 防止异步导致的会话parentid顺序错误，所以需要上锁
         user_lock[session_id] = True
         resp = await get_chat_response(session_id, msg)
+        resp = await output_img(resp, img_out_rule)
         await chatGPT.send(resp, at_sender=True)
         # 解锁
         user_lock[session_id] = False
