@@ -2,7 +2,7 @@
 
 ## 安装
 
-~~第一种方式~~（暂时不行，等待pr通过）
+第一种方式
 
 ```
 nb plugin install nonebot_plugin_multi_chatgpt
@@ -24,42 +24,27 @@ nonebot.load_plugin('nonebot_plugin_multi_chatgpt')
 
 ## 配置
 
-### token方式
-
-在`.env.dev`中配置自己的`chatgpt_session_token_list`即可
-
-多个token，请注意不能换行只能写成一排 例如
-
+在`env.dev`中填入如下配置，根据注释可以自行修改
 ```
-chatgpt_session_token_list = ["xxx", "yyy", "zzz"]
-```
-
-如果只有一个session也需要用数组的形式
-
-```
-chatgpt_session_token_list = ["xxxx"]
+chatgpt_token_path = "config/chatgpt_token.yml" # token路径
+chatgpt_command_prefix = "。"                   # 指令前缀
+chatgpt_need_at = False                         # 是否需要@
+chatgpt_image_render = False                    # 是否需要图片渲染
+chatgpt_proxy = "http://127.0.0.1:6512"         # 代理
 ```
 
-获取token得方法，打开Application选项卡 > Cookie，复制值`__Secure-next-auth.session-token`并将其粘贴到在`.env.dev`中`session_token`即可。不需要管Authorization的值。
+bot的token，请写在您配置的`chatgpt_token_path`下面，默认路径是`config/chatgpt_img_config.yml`
+
+多个token请按照如下格式填写
+```
+session_tokens:
+  - XXX
+  - YYY
+```
+
+获取token得方法，打开`Application`选项卡`Cookie`，复制值`__Secure-next-auth.session-token`并其中的值即可。
+
 ![](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221205094326498.png)
-
-### 密码方式
-
-密码登陆需要通过代理来配置，一般配置格式如下。
-
-```
-chatgpt_email_list = ["osyyjozylg@iubridge.com", "lgfo353p@linshiyouxiang.net"]
-chatgpt_passwd_list = ["yy123123", "yy123123"]
-chatgpt_proxy = "http://127.0.0.1:6152"
-```
-
-### 其他
-
-指令前缀，默认值为`chat`
-
-```
-chatgpt_command_prefix = "。"
-```
 
 ## 图片相关
 
@@ -105,4 +90,3 @@ chatgpt_command_prefix = "。"
 # Todo
 
 - [X]  返回值渲染为图片
-- [ ]  完善密码登陆
