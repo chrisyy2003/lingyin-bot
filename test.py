@@ -11,11 +11,6 @@ async def main():
     bot = await asyncio.get_event_loop().run_in_executor(None, Chatbot, config)
     res = await bot.get_chat_response("hello")
     print(res)
-    #
-    # while msg := input("输入问题: "):
-    #     res = await chatbot.get_chat_response(msg)
-    #     print(res)
-
 
 loop = asyncio.get_event_loop() # 创建事件循环
 loop.run_until_complete(main())

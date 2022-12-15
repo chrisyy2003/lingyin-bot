@@ -8,10 +8,14 @@ from nonebot import require
 import time
 from .utils import user_input, output_img, yaml_load
 from .config import *
-
 scheduler = require("nonebot_plugin_apscheduler").scheduler
-# 初始化chatbot
 
+
+# 触发器
+chatGPT = on_command(priority=10, block=True, **matcher_params)
+
+
+# 初始化chatbot
 chat_bot_list: List[Chatbot] = []
 
 @driver.on_startup
@@ -33,6 +37,7 @@ async def _():
         exit("chatGPT 初始化失败")
     else:
         logger.success(f"成功加载 {token_length - fail_count}个 bot")
+
 
 # 用户会话ID map
 user_session = dict()
@@ -76,7 +81,7 @@ class Session:
                 try:
                     return await bot.get_chat_response(msg)
                 except Exception as e:
-                    return  f"发生错误 {e}"
+                    return f"发生错误 {e}"
 
         resp = await get_chat_text(bot, msg)
 
@@ -95,9 +100,6 @@ def get_user_session(user_id) -> Session:
     if user_id not in user_session:
         user_session[user_id] = Session(user_id)
     return user_session[user_id]
-
-# 触发器
-chatGPT = on_command(chatgpt_command_prefix, priority=10, block=True)
 
 
 @chatGPT.handle()
@@ -134,4 +136,6 @@ async def refresh_session():
         # await chatbot.refresh_session()
         logger.debug(f"refresh chatGPT {chat_bot_list.index(chatbot)}")
         await asyncio.get_event_loop().run_in_executor(None, chatbot.refresh_session)
+
+
 scheduler.add_job(refresh_session)

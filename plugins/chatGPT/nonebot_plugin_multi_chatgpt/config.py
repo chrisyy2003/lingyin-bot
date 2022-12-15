@@ -3,8 +3,8 @@ from typing import List
 
 from pydantic import BaseSettings
 from nonebot import get_driver
+from nonebot.rule import to_me
 from .utils import yaml_load
-
 
 class Config(BaseSettings):
     # Your Config Here
@@ -33,3 +33,11 @@ config_list = [{
         "session_token": token,
         "proxy": chatgpt_proxy if chatgpt_proxy else '' ,
     } for token in token_list]
+
+matcher_params = {}
+matcher_params['cmd'] = chatgpt_command_prefix
+if chatgpt_need_at:
+    matcher_params['rule'] = to_me()
+
+
+
