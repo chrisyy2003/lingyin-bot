@@ -10,11 +10,10 @@ from pathlib import Path
 import yaml
 from nonebot import get_driver
 
-LOCAL = Path() / "config_multi_chatgpt"
-IMG_OUT_CONFIG = LOCAL / "img_out_config.yml"
+LOCAL = Path() / "config"
+IMG_OUT_CONFIG = LOCAL / "chatgpt_img_config.yml"
 
-
-@get_driver().on_bot_connect
+@get_driver().on_startup
 async def _():
     LOCAL.mkdir(exist_ok=True)
     if not IMG_OUT_CONFIG.exists():
