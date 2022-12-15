@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-multi-chatgpt"
-version = "2.0.3"
+version = "3.0.0"
 description = ""
 authors = ["chrisyy <1017975501@qq.com>"]
 readme = "README.md"
