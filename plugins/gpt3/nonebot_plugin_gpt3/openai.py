@@ -6,14 +6,14 @@ import openai
 start_sequence = "\nAI:"
 restart_sequence = "\nHuman: "
 
-def get_chat_response(msg) -> str:
-    openai.api_key = "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"
+def get_chat_response(key, msg) -> str:
+    openai.api_key = key
     try:
         response : str = openai.Completion.create(
             model="text-davinci-003",
             prompt=msg,
             temperature=0.9,
-            max_tokens=2048,
+            max_tokens=3048,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0.6,
