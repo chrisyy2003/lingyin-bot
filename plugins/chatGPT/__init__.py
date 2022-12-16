@@ -1,1 +1,1 @@
-from .nonebot_plugin_multi_chatgpt import *
+# from .nonebot_plugin_multi_chatgpt import *
