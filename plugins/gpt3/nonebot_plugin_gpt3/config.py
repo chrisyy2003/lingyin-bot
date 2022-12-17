@@ -11,7 +11,7 @@ class Config(BaseSettings):
     chatgpt_command_prefix: str = ''
     chatgpt_need_at: bool = True
     chatgpt_image_render: bool = False
-    chatgpt_image_limit: int = 50
+    chatgpt_image_limit: int = 100
 
 
     class Config:

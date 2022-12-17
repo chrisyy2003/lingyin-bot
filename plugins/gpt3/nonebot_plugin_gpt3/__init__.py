@@ -104,7 +104,7 @@ from nonebot.log import logger
 from nonebot_plugin_htmlrender import md_to_pic
 
 
-@on_command("重置会话", priority=10, block=True, rule=to_me()).handle()
+@on_command("重置会话", aliases={"刷新", "重置"},priority=10, block=True, rule=to_me()).handle()
 async def _(matcher: Matcher, event: MessageEvent, arg: Message = CommandArg()):
     print(Message)
     session_id = event.get_session_id()
@@ -142,7 +142,6 @@ user_lock = {}
 # 基本聊天
 @on_command(priority=100, block=True, **matcher_params).handle()
 async def _(matcher: Matcher, event: MessageEvent, arg: Message = CommandArg()):
-    logger.error('不同聊天')
     session_id = event.get_session_id()
     msg = arg.extract_plain_text().strip()
 
@@ -175,14 +174,14 @@ async def _(matcher: Matcher, event: MessageEvent, arg: Message = CommandArg()):
     user_lock[session_id] = False
 
 # 连续聊天
-chat_gpt3 = on_command("chat", aliases={"聊天", "开始聊天", '聊天开始'}, priority=10, block=True)
+chat_gpt3 = on_command("chat", aliases={"聊天", "开始聊天", '聊天开始'}, priority=10, block=True, rule=to_me())
 end_conversation = ['stop', '结束', '聊天结束', '结束聊天']
 
 @chat_gpt3.handle()
 async def _(args: Message = CommandArg()):
     plain_text = args.extract_plain_text()
     if plain_text:
-        chat_gpt3.set_arg("prompt", plain_text)
+        chat_gpt3.set_arg("prompt", args)
 
 
 @chat_gpt3.got("prompt", prompt="聊天开始...")
