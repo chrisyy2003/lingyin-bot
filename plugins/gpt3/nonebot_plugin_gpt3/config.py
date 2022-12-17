@@ -8,7 +8,7 @@ from pathlib import Path
 class Config(BaseSettings):
     # Your Config Here
     chatgpt_api_key_path: str = "config/chatgpt_api_key.yml"
-    chatgpt_command_prefix: str = ''
+    chatgpt_command_prefix: str = 'chat'
     chatgpt_need_at: bool = True
     chatgpt_image_render: bool = False
     chatgpt_image_limit: int = 100

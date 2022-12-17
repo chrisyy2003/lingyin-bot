@@ -101,7 +101,8 @@ from nonebot.adapters.onebot.v11 import Message, MessageEvent, GroupMessageEvent
 from nonebot.params import Arg, CommandArg, ArgPlainText, CommandArg, Matcher
 from nonebot.log import logger
 
-from nonebot_plugin_htmlrender import md_to_pic
+if chatgpt_image_render:
+    from nonebot_plugin_htmlrender import md_to_pic
 
 
 @on_command("重置会话", aliases={"刷新", "重置"},priority=10, block=True, rule=to_me()).handle()
