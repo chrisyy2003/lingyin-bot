@@ -66,9 +66,9 @@ api_keys:
 
 ```
 chatgpt_api_key_path = "config/chatgpt_api.yml" # api文件
-chatgpt_command_prefix = "chat"									# 触发聊天的前缀
-chatgpt_need_at = False													# 是否需要@
-chatgpt_image_render = False										# 是否需要图片渲染
+chatgpt_command_prefix = "chat"                 # 触发聊天的前缀
+chatgpt_need_at = False                         # 是否需要@
+chatgpt_image_render = False                    # 是否需要图片渲染
 ```
 
 

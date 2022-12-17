@@ -3,7 +3,7 @@ from pydantic import BaseSettings
 from nonebot import get_driver
 from nonebot.rule import to_me
 import yaml
-
+from pathlib import Path
 
 class Config(BaseSettings):
     # Your Config Here
@@ -23,6 +23,12 @@ chatgpt_api_keys_path = config.chatgpt_api_key_path
 chatgpt_command_prefix = config.chatgpt_command_prefix
 chatgpt_need_at = config.chatgpt_need_at
 chatgpt_image_render = config.chatgpt_image_render
+
+
+# 如果不存在则创建
+if not Path(chatgpt_api_keys_path).exists():
+    with open(chatgpt_api_keys_path, 'w', encoding='utf-8') as f:
+        yaml.dump({"api_keys": []}, f, allow_unicode=True)
 
 with open(chatgpt_api_keys_path, 'r', encoding='utf-8') as f:
     api_key_list = yaml.load(f, Loader=yaml.FullLoader).get('api_keys')
