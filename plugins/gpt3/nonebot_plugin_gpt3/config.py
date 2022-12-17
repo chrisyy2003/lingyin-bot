@@ -8,9 +8,11 @@ from pathlib import Path
 class Config(BaseSettings):
     # Your Config Here
     chatgpt_api_key_path: str = "config/chatgpt_api_key.yml"
-    chatgpt_command_prefix: str = 'chat'
+    chatgpt_command_prefix: str = ''
     chatgpt_need_at: bool = True
     chatgpt_image_render: bool = False
+    chatgpt_image_limit: int = 50
+
 
     class Config:
         extra = "ignore"
@@ -23,6 +25,7 @@ chatgpt_api_keys_path = config.chatgpt_api_key_path
 chatgpt_command_prefix = config.chatgpt_command_prefix
 chatgpt_need_at = config.chatgpt_need_at
 chatgpt_image_render = config.chatgpt_image_render
+chatgpt_image_limit = config.chatgpt_image_limit
 
 
 # 如果不存在则创建
