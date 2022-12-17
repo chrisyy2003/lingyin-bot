@@ -23,7 +23,7 @@ _✨ 基于openai GPT3官方API的对话插件 ✨_
 
 </div>
 
-## 功能
+# 功能
 
 - [x] 上下文功能
 - [x] 会话导出
@@ -32,11 +32,11 @@ _✨ 基于openai GPT3官方API的对话插件 ✨_
 - [x] 人格设置
 - [x] 连续会话
 
-## 如何使用？
+# 如何使用？
 
 私聊中是直接发送消息，**群聊中是以回复的方式发送。**
 
-### 功能列表
+## 功能列表
 
 |          指令          |      需要@      |                描述                |
 | :--------------------: | :-------------: | :--------------------------------: |
@@ -50,13 +50,13 @@ _✨ 基于openai GPT3官方API的对话插件 ✨_
 
 
 
-### 连续会话
+## 连续会话
 
 输入**chat/聊天/开始聊天**即可不加前缀，连续的对话，输入**结束/结束聊天**，即可结束聊天
 
 ![image-20221217230058979](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221217230058979.png)
 
-### 人格设置
+## 人格设置
 
 预设了**AI助手/猫娘/nsfw猫娘**三种人格，可以通过人格设置切换。
 
@@ -66,13 +66,13 @@ _✨ 基于openai GPT3官方API的对话插件 ✨_
 
 ![image-20221217232155100](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221217232155100.png)
 
-### 图片渲染
+## 图片渲染
 
 图片渲染可以在配置文件中配置是否，需要渲染
 
 ![image-20221217233729263](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221217233729263.png)
 
-## 安装
+# 安装
 
 1.  使用 nb-cli
 
@@ -92,7 +92,7 @@ pip install nonebot_plugin_gpt3
 nonebot.load_plugin('nonebot_plugin_gpt3')
 ```
 
-## 配置
+# 配置
 
 对于官方openai接口只需配置API Keys即可，所以请填写API在您配置的`chatgpt_token_path`下面，默认路径是`config/chatgpt_img_config.yml`
 
