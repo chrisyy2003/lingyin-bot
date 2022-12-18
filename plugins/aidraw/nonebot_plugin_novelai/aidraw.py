@@ -60,8 +60,6 @@ aidraw = on_shell_command(
 async def aidraw_get(bot: Bot, event: GroupMessageEvent, args: Namespace = ShellCommandArgs()):
     user_id = str(event.user_id)
     group_id = str(event.group_id)
-
-    logger.debug(f"{user_id} {group_id}")
     # 判断是否禁用，若没禁用，进入处理流程
     if await config.get_value(group_id, "on"):
         message = ""
@@ -89,10 +87,10 @@ async def aidraw_get(bot: Bot, event: GroupMessageEvent, args: Namespace = Shell
         args.ntags = await prepocess_tags(args.ntags)
         fifo = AIDRAW(user_id=user_id, group_id=group_id, **vars(args))
         # 检测是否有18+词条
-        if not config.novelai_h:
-            pattern = re.compile(f"(\s|,|^)({htags})(\s|,|$)")
-            if (re.search(pattern, fifo.tags) is not None):
-                await aidraw.finish(f"H是不行的!")
+        # if not config.novelai_h:
+        #     pattern = re.compile(f"(\s|,|^)({htags})(\s|,|$)")
+        #     if (re.search(pattern, fifo.tags) is not None):
+        #         await aidraw.finish(f"H是不行的!")
         if not args.override:
             fifo.tags = basetag + await config.get_value(group_id, "tags") + "," + fifo.tags
             fifo.ntags = lowQuality + fifo.ntags

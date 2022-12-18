@@ -2,7 +2,7 @@ from ..config import config
 from pathlib import Path
 import hashlib
 import aiofiles
-path = Path("data/novelai/output").resolve()
+path = Path("image/novelai/output").resolve()
 async def save_img(fifo, img_bytes: bytes, extra: str = "unknown"):
     # 存储图片
     if config.novelai_save:

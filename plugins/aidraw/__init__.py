@@ -1,1 +1,1 @@
-# from .nonebot_plugin_novelai import *
+from .nonebot_plugin_novelai import *
