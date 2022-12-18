@@ -12,8 +12,8 @@ def get_chat_response(key, msg) -> str:
         response : str = openai.Completion.create(
             model="text-davinci-003",
             prompt=msg,
-            temperature=0.9,
-            max_tokens=3048,
+            temperature=0.6,
+            max_tokens=1000,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0.6,

@@ -1,8 +1,9 @@
 <div align="center">
-  <a href="https://v2.nonebot.dev/store"><img src="https://s2.loli.net/2022/06/16/opBDE8Swad5rU3n.png" width="180" height="180" alt="NoneBotPluginLogo"></a>
+  <img src="https://s2.loli.net/2022/06/16/opBDE8Swad5rU3n.png" width="180" height="180" alt="NoneBotPluginLogo">
   <br>
   <p><img src="https://s2.loli.net/2022/06/16/xsVUGRrkbn1ljTD.png" width="240" alt="NoneBotPluginText"></p>
 </div>
+
 
 <div align="center">
 
@@ -22,15 +23,56 @@ _✨ 基于openai GPT3官方API的对话插件 ✨_
 
 </div>
 
-## 功能
+# 功能
 
-- [x] 上下文
+- [x] 上下文功能
 - [x] 会话导出
 - [x] 返回文字图片渲染
 - [x] 每个人单独会话
-- [ ] 更多配置
+- [x] 人格设置
+- [x] 连续会话
 
-## 安装
+# 如何使用？
+
+私聊中是直接发送消息，**群聊中是以回复的方式发送。**
+
+## 功能列表
+
+|          指令          |      需要@      |      描述       |
+| :--------------------: | :-------------: |:-------------:|
+|     刷新/重置对话      |       是        | 重置会话记录，开始新的对话 |
+|        重置人格        |       是        |    重置AI人格     |
+|        设置人格        |       是        |    设置AI人格     |
+|   导出会话/导出对话    |       是        |    导出历史会话     |
+|  **自定义的指令前缀**  | 自定义是否需要@ |    基本的聊天对话    |
+| **chat/聊天/开始聊天** |       是        |    开始连续对话     |
+| **stop/结束/结束聊天** |       否        |   结束连续聊天模式    |
+
+
+
+## 连续会话
+
+输入**chat/聊天/开始聊天**即可不加前缀，连续的对话，输入**结束/结束聊天**，即可结束聊天
+
+![image-20221217230058979](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221217230058979.png)
+
+## 人格设置
+
+预设了**AI助手/猫娘/nsfw猫娘**三种人格，可以通过人格设置切换。内置的设定可以从[这里看到](https://github.com/chrisyy2003/lingyin-bot/blob/main/plugins/gpt3/nonebot_plugin_gpt3/__init__.py#L16-L18)。
+
+![image-20221217231703614](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221217231703614.png)
+
+同样也可以手动指定人格
+
+![image-20221217232155100](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221217232155100.png)
+
+## 图片渲染
+
+图片渲染可以在配置文件中配置是否，需要渲染
+
+![image-20221217233729263](https://chrisyy-images.oss-cn-chengdu.aliyuncs.com/img/image-20221217233729263.png)
+
+# 安装
 
 1.  使用 nb-cli
 
@@ -50,7 +92,7 @@ pip install nonebot_plugin_gpt3
 nonebot.load_plugin('nonebot_plugin_gpt3')
 ```
 
-## 配置
+# 配置
 
 对于官方openai接口只需配置API Keys即可，所以请填写API在您配置的`chatgpt_token_path`下面，默认路径是`config/chatgpt_img_config.yml`
 
@@ -66,11 +108,9 @@ api_keys:
 
 ```
 chatgpt_api_key_path = "config/chatgpt_api.yml" # api文件
-chatgpt_command_prefix = "chat"									# 触发聊天的前缀
-chatgpt_need_at = False													# 是否需要@
-chatgpt_image_render = False										# 是否需要图片渲染
+chatgpt_command_prefix = "chat"                 # 触发聊天的前缀
+chatgpt_need_at = False                         # 是否需要@
+chatgpt_image_render = False                    # 是否需要图片渲染
+chatgpt_image_limit = 100                       # 长度超过多少才会渲染成图片
 ```
-
-
-## 如何使用？
 
