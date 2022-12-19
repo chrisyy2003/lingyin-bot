@@ -71,6 +71,9 @@ class Session:
         if ok:
             self.conversation.append(f"{msg} {start_sequence}{res}{restart_sequence}")
             print(self.conversation)
+        else:
+            # 超出长度或者错误自动重置
+            self.reset()
 
         token_len = len(tokenizer.encode(prompt))
         logger.debug(f"token : {token_len}")
@@ -182,7 +185,7 @@ end_conversation = ['stop', '结束', '聊天结束', '结束聊天']
 async def _(args: Message = CommandArg()):
     plain_text = args.extract_plain_text()
     if plain_text:
-        chat_gpt3.set_arg("prompt", args)
+        chat_gpt3.set_arg("prompt", message=args)
 
 
 @chat_gpt3.got("prompt", prompt="聊天开始...")

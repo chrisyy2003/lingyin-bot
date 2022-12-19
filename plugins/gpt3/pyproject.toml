@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "nonebot-plugin-gpt3"
-version = "1.0.2"
+version = "1.0.8"
 description = ""
 authors = ["chrisyy <1017975501@qq.com>"]
 readme = "README.md"
 packages = [{include = "nonebot_plugin_gpt3"}]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 nonebot2 = "^2.0.0rc2"
 nonebot-adapter-onebot = "^2.1.5"
 

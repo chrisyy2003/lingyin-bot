@@ -13,7 +13,7 @@ def get_chat_response(key, msg) -> str:
             model="text-davinci-003",
             prompt=msg,
             temperature=0.6,
-            max_tokens=1000,
+            max_tokens=400,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0.6,
