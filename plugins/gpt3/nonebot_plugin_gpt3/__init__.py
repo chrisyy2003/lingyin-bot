@@ -173,9 +173,12 @@ async def _(matcher: Matcher, event: MessageEvent, arg: Message = CommandArg()):
         try:
             await matcher.send(MessageSegment.reply(message_id) + resp, at_sender=True)
         except:
-            await matcher.send("消息发送失败可能是被风控，建议使用文转图模式", at_sender=True)
+            from nonebot_plugin_htmlrender import md_to_pic
+            img = await md_to_pic(resp)
+            resp = MessageSegment.image(img)
+            await matcher.send("消息发送失败可能是被风控，建议使用文转图模式,本回复已转为图片模式" + resp, at_sender=True)
             user_lock[session_id] = False
-            
+
     user_lock[session_id] = False
 
 # 连续聊天
