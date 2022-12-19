@@ -173,8 +173,12 @@ async def _(matcher: Matcher, event: MessageEvent, arg: Message = CommandArg()):
     else:
         # 如果不是则以回复的形式发送
         message_id = event.message_id
-        await matcher.send(MessageSegment.reply(message_id) + resp, at_sender=True)
-
+        try:
+            await matcher.send(MessageSegment.reply(message_id) + resp, at_sender=True)
+        except:
+            await matcher.send("消息发送失败可能是被风控，建议使用文转图模式", at_sender=True)
+            user_lock[session_id] = False
+            
     user_lock[session_id] = False
 
 # 连续聊天
