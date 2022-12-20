@@ -1,3 +1,6 @@
 [submodule "plugins/gpt3"]
 	path = plugins/gpt3
 	url = https://github.com/chrisyy2003/nonebot-plugin-gpt3
+[submodule "plugins/chatgpt"]
+	path = plugins/chatgpt
+	url = https://github.com/chrisyy2003/nonebot-plugin-multi-chatgpt
