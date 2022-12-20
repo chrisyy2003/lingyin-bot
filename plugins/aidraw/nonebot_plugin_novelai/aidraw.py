@@ -50,7 +50,7 @@ aidraw_parser.add_argument("-o", "--override", "-不优化",
 
 aidraw = on_shell_command(
     ".aidraw",
-    aliases={"绘画", "咏唱", "召唤", "约稿", "aidraw"},
+    aliases={"绘画", "绘图", "召唤", "约稿", "aidraw"},
     parser=aidraw_parser,
     priority=5
 )
@@ -87,10 +87,13 @@ async def aidraw_get(bot: Bot, event: GroupMessageEvent, args: Namespace = Shell
         args.ntags = await prepocess_tags(args.ntags)
         fifo = AIDRAW(user_id=user_id, group_id=group_id, **vars(args))
         # 检测是否有18+词条
-        # if not config.novelai_h:
-        #     pattern = re.compile(f"(\s|,|^)({htags})(\s|,|$)")
-        #     if (re.search(pattern, fifo.tags) is not None):
-        #         await aidraw.finish(f"H是不行的!")
+
+        h = False
+        if not config.novelai_h:
+            pattern = re.compile(f"(\s|,|^)({htags})(\s|,|$)")
+            if (re.search(pattern, fifo.tags) is not None):
+                # await aidraw.finish(f"H是不行的!")
+                h = True
         if not args.override:
             fifo.tags = basetag + await config.get_value(group_id, "tags") + "," + fifo.tags
             fifo.ntags = lowQuality + fifo.ntags

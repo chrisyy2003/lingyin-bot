@@ -98,14 +98,12 @@ def get_user_session(user_id) -> Session:
     return user_session[user_id]
 
 
-from nonebot import on_command, on_message
+from nonebot import on_command
 from nonebot.rule import to_me
-from nonebot.adapters.onebot.v11 import Message, MessageEvent, GroupMessageEvent, PrivateMessageEvent, MessageSegment
-from nonebot.params import Arg, CommandArg, ArgPlainText, CommandArg, Matcher
+from nonebot.adapters.onebot.v11 import Message, MessageEvent, PrivateMessageEvent, MessageSegment
+from nonebot.params import Arg, ArgPlainText, CommandArg, Matcher
 from nonebot.log import logger
-
-if chatgpt_image_render:
-    from nonebot_plugin_htmlrender import md_to_pic
+from nonebot_plugin_htmlrender import md_to_pic
 
 
 @on_command("重置会话", aliases={"刷新", "重置"},priority=10, block=True, rule=to_me()).handle()
@@ -176,7 +174,6 @@ async def _(matcher: Matcher, event: MessageEvent, arg: Message = CommandArg()):
         try:
             await matcher.send(MessageSegment.reply(message_id) + resp, at_sender=True)
         except:
-            from nonebot_plugin_htmlrender import md_to_pic
             img = await md_to_pic(resp)
             resp = MessageSegment.image(img)
             await matcher.send("消息发送失败可能是被风控，建议使用文转图模式,本回复已转为图片模式" + resp, at_sender=True)
