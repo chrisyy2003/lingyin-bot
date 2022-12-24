@@ -4,7 +4,11 @@
 
 
 # cqhttp
-cqhttp/
+cqhttp/data
+cqhttp/logs
+cqhttp/device.json
+cqhttp/session.token
+
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -147,3 +151,6 @@ dmypy.json
 
 # clash 代理
 clash/
+
+# js
+node_modules/
