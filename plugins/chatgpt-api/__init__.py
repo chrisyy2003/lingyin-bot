@@ -9,7 +9,9 @@ chat_bot_list = []
 
 index = 0
 
-chat_bot_list = requests.get('http://127.0.0.1:3000/len').json()['len']
+url = 'http://152.32.147.54:3000'
+
+chat_bot_list = requests.get(url + '/len').json()['len']
 
 
 class Session:
@@ -51,12 +53,12 @@ class Session:
             logger.debug(params)
             async with aiohttp.ClientSession() as session:
                 try:
-                    async with session.get('http://127.0.0.1:3000/chat', params=params) as resp:
+                    async with session.get(url + 'chat', params=params) as resp:
                         r = await resp.json()
                         return r
                 except Exception as e:
                     try:
-                        async with session.get('http://127.0.0.1:3000/chat', params=params) as resp2:
+                        async with session.get(url + '/chat', params=params) as resp2:
                             r = await resp2.json()
                             return r
                     except Exception as e:

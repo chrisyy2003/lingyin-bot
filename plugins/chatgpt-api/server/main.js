@@ -4,7 +4,6 @@ import { ChatGPTAPIBrowser } from 'chatgpt'
 
 var app = express();
 
-
 const config = [
     {
         email: 'osyyjozylg@iubridge.com',
@@ -21,12 +20,15 @@ let bot_list = []
 
 async function init_bot() {
 
-  config.forEach(async el => {
-    console.log(el);
-    const api = new ChatGPTAPIBrowser(el)
-    await api.initSession()
-    bot_list.push(api)
-  });
+  for (let i = 0; i < config.length; i++) {
+        const api = new ChatGPTAPIBrowser(config[i])
+        try {
+            await api.initSession()
+            bot_list.push(api)
+        }catch (e) {
+            console.log(e)
+        }
+    }
 }
 
 
