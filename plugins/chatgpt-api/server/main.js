@@ -19,17 +19,23 @@ const config = [
 let bot_list = []
 
 async function init_bot() {
-
-  for (let i = 0; i < config.length; i++) {
+    console.log(config)
+    for (let i = 0; i < config.length; i++) {
         const api = new ChatGPTAPIBrowser(config[i])
         try {
             await api.initSession()
             bot_list.push(api)
         }catch (e) {
             console.log(e)
+            bot_list.pop()
         }
     }
 }
+
+app.use((req, res, next) => {
+  console.log('Time:', Date.now(), req.url)
+  next()
+})
 
 
 app.get('/chat', async (req, res) => {

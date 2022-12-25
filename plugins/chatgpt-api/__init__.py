@@ -13,6 +13,7 @@ url = 'http://152.32.147.54:3000'
 
 chat_bot_list = requests.get(url + '/len').json()['len']
 
+fail_count = 0
 
 class Session:
     def __init__(self, id):
@@ -62,8 +63,9 @@ class Session:
                             r = await resp2.json()
                             return r
                     except Exception as e:
+                        global fail_count
+                        fail_count += 1
                         return f"发生错误 {e}"
-                    return f"发生错误 {e}"
 
         resp = await chat(bot, msg, self.conversation_id, self.parent_id)
 
@@ -109,6 +111,10 @@ chatgpt = on_command('。', priority=9, block=True)
 async def _(event: MessageEvent, arg: Message = CommandArg()):
     session_id = event.get_session_id()
     msg = arg.extract_plain_text().strip()
+
+    global fail_count
+    if fail_count > 10:
+        return
 
     if not msg:
         return
