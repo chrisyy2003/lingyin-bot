@@ -15,6 +15,7 @@ chat_bot_list = requests.get(url + '/len').json()['len']
 
 fail_count = 0
 
+
 class Session:
     def __init__(self, id):
         self.session_id = id
@@ -54,7 +55,7 @@ class Session:
             logger.debug(params)
             async with aiohttp.ClientSession() as session:
                 try:
-                    async with session.get(url + 'chat', params=params) as resp:
+                    async with session.get(url + '/chat', params=params) as resp:
                         r = await resp.json()
                         return r
                 except Exception as e:
@@ -95,14 +96,26 @@ from nonebot import on_command
 from nonebot.params import CommandArg
 from nonebot.adapters.onebot.v11 import Message, MessageEvent, MessageSegment, PrivateMessageEvent
 
-
 reset_c = on_command("重置", priority=9, block=True)
+
+
 @reset_c.handle()
 async def _(event: MessageEvent, arg: Message = CommandArg()):
     session_id = event.get_session_id()
     msg = arg.extract_plain_text().strip()
     get_user_session(session_id).reset()
     await reset_c.finish("会话已重置")
+
+
+s = False
+reset_c = on_command("切换", priority=9, block=True)
+
+
+@reset_c.handle()
+async def _(event: MessageEvent, arg: Message = CommandArg()):
+    global s
+    s = not s
+
 
 chatgpt = on_command('。', priority=9, block=True)
 
@@ -113,7 +126,7 @@ async def _(event: MessageEvent, arg: Message = CommandArg()):
     msg = arg.extract_plain_text().strip()
 
     global fail_count
-    if fail_count > 10:
+    if fail_count > 10 or s:
         return
 
     if not msg:
@@ -124,12 +137,5 @@ async def _(event: MessageEvent, arg: Message = CommandArg()):
     else:
         user_lock[session_id] = True
         resp = await get_user_session(session_id).get_chat_response(msg)
-
-        if len(resp) > 120:
-            if resp.count("```") % 2 != 0:
-                resp += "\n```"
-            img = await md_to_pic(resp)
-            resp = MessageSegment.image(img)
         await chatgpt.send(resp, at_sender=True)
-
         user_lock[session_id] = False

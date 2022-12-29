@@ -26,15 +26,15 @@ async function init_bot() {
             await api.initSession()
             bot_list.push(api)
         }catch (e) {
-            console.log(e)
-            bot_list.pop()
+            console.log(config[i].email, 'fail...')
         }
     }
 }
 
 app.use((req, res, next) => {
-  console.log('Time:', Date.now(), req.url)
-  next()
+    const now = new Date(Date.now())
+    console.log(now.toLocaleDateString() ,now.toLocaleTimeString(), req.url)
+    next()
 })
 
 
@@ -44,21 +44,24 @@ app.get('/chat', async (req, res) => {
     const conversationId = req.query.conversationId
     const messageId = req.query.messageId
 
-    
-
     console.log(conversationId, messageId);
     let result
-    if (conversationId == undefined) {
-        result = await bot_list[bot_id].sendMessage(msg)
-    }else {
-        result = await bot_list[bot_id].sendMessage(msg, {
-            conversationId: conversationId,
-            parentMessageId: messageId
-        })
-
+    try{
+        if (conversationId == undefined) {
+            result = await bot_list[bot_id % bot_list.length].sendMessage(msg)
+            res.send(result);
+            return
+        }else {
+            result = await bot_list[bot_id % bot_list.length].sendMessage(msg, {
+                conversationId: conversationId,
+                parentMessageId: messageId
+            })
+            res.send(result);
+            return
+        }
+    }catch (e) {
+        return e
     }
-    console.log(result)
-    res.send(result);
 });
 
 app.get('/len', function (req, res) {
@@ -67,9 +70,21 @@ app.get('/len', function (req, res) {
     });
 });
 
+app.get('/bot', function (req, res) {
+    res.send({
+        bot: bot_list
+    });
+});
+
+app.get('/re', async (req, res) => {
+    const id = req.query.id
+    await bot_list[id % config.length].refreshSession()
+    res.send('ok');
+});
+
 
 init_bot().then(() => {
     app.listen(3000, () => {
-        console.log('express start...');
+        console.log('express start...')
     })
 })
