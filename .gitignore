@@ -154,3 +154,6 @@ clash/
 
 # js
 node_modules/
+
+# config
+config/
