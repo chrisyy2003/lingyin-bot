@@ -6,15 +6,7 @@
 2.  `poetry install` 安装依赖
 3.  `poetry run python3 bot.py` 启动bot
 
-# 作为插件安装
-
-Lingyin Bot中的源码已作为插件发布，如果觉得有帮助需要继承到自己的Bot中可以使用两种方法：
-
-1.  直接复制源码中的插件到自己的bot的plugin目录下，然后加上相应的配置即可
-2.  通过包管理器安装，可以通过nb，pip3，或者poetry等方式安装
-
-第一种可能需要一定的基础，第二种几行命令就可以搞定，但是方便自定义功能。
-
 ## 已经发布的插件
 
 -   多账号的ChatGPT插件：[nonebot_plugin_multi_chatgpt](https://github.com/chrisyy2003/lingyin-bot/tree/main/plugins/chatGPT)
+-   GPT3官方API的对话插件：[nonebot-plugin-gpt3](https://github.com/chrisyy2003/nonebot-plugin-gpt3)
