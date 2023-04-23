@@ -1,13 +1,13 @@
 # go-cqhttp 默认配置文件
 
 account: # 账号相关
-  uin: 385461519 # QQ账号
+  uin: 323805693 # QQ账号
   password: '' # 密码为空时使用扫码登录
   encrypt: false  # 是否开启密码加密
   status: 0      # 在线状态 请参考 https://docs.go-cqhttp.org/guide/config.html#在线状态
   relogin: # 重连设置
-    delay: 1   # 首次重连延迟, 单位秒
-    interval: 1   # 重连间隔
+    delay: 3   # 首次重连延迟, 单位秒
+    interval: 3   # 重连间隔
     max-times: 0  # 最大重连次数, 0为无限制
 
   # 是否使用服务器下发的新地址进行重连
@@ -19,7 +19,7 @@ account: # 账号相关
 heartbeat:
   # 心跳频率, 单位秒
   # -1 为关闭心跳
-  interval: 2
+  interval: 5
 
 message:
   # 上报数据类型
@@ -43,6 +43,8 @@ message:
   extra-reply-data: false
   # 跳过 Mime 扫描, 忽略错误数据
   skip-mime-scan: false
+  # 是否自动转换 WebP 图片
+  convert-webp-image: false
 
 output:
   # 日志等级 trace,debug,info,warn,error
@@ -78,11 +80,12 @@ database: # 数据库相关设置
     # 启用将会增加10-20MB的内存占用和一定的磁盘空间
     # 关闭将无法使用 撤回 回复 get_msg 等上下文相关功能
     enable: true
-
-  # 媒体文件缓存， 删除此项则使用缓存文件(旧版行为)
-  cache:
-    image: data/image.db
-    video: data/video.db
+  sqlite3:
+    # 是否启用内置sqlite3数据库
+    # 启用将会增加一定的内存占用和一定的磁盘空间
+    # 关闭将无法使用 撤回 回复 get_msg 等上下文相关功能
+    enable: false
+    cachettl: 3600000000000 # 1h
 
 # 连接服务列表
 servers:
